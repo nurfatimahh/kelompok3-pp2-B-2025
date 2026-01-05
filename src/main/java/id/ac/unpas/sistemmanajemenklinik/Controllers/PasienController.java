@@ -10,7 +10,7 @@ package id.ac.unpas.sistemmanajemenklinik.controllers;
  */
 
 import id.ac.unpas.sistemmanajemenklinik.KoneksiDB;
-import id.ac.unpas.sistemmanajemenklinik.Models.PasienModel;
+import id.ac.unpas.sistemmanajemenklinik.models.PasienModel;
 import id.ac.unpas.sistemmanajemenklinik.views.PasienView;
 import java.sql.*;
 import javax.swing.*;

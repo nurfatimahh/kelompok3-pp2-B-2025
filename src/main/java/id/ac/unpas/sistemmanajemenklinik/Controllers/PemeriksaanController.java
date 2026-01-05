@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package id.ac.unpas.sistemmanajemenklinik.Controllers;
-<<<<<<< HEAD
+package id.ac.unpas.sistemmanajemenklinik.controllers;
+
+import id.ac.unpas.sistemmanajemenklinik.models.PasienModel;
+import id.ac.unpas.sistemmanajemenklinik.models.DokterModel;
 
 /**
  *
@@ -11,14 +13,8 @@ package id.ac.unpas.sistemmanajemenklinik.Controllers;
  */
 public class PemeriksaanController {
     
-=======
-/**
- *
- * @author Narita Risnawati
- */
 import id.ac.unpas.sistemmanajemenklinik.KoneksiDB;
-import id.ac.unpas.sistemmanajemenklinik.Models.*;
-import id.ac.unpas.sistemmanajemenklinik.Views.PemeriksaanView;
+import id.ac.unpas.sistemmanajemenklinik.views.PemeriksaanView;
 import java.sql.*;
 import java.util.UUID;
 import java.util.Date;
@@ -182,5 +178,4 @@ public class PemeriksaanController {
     private void exportPdf() {
         try { view.tablePemeriksaan.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat("Laporan Pemeriksaan"), null); } catch (PrinterException ex) {}
     }
->>>>>>> 157e66bf29838b00f6174d9834661e5698ee54a2
 }

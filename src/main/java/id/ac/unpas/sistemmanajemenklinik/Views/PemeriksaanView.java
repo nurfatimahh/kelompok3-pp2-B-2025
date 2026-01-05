@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package id.ac.unpas.sistemmanajemenklinik.Views;
+package id.ac.unpas.sistemmanajemenklinik.views;
 /**
  *
  * @author Narita Risnawati
  */
-import id.ac.unpas.sistemmanajemenklinik.Models.DokterModel;
-import id.ac.unpas.sistemmanajemenklinik.Models.PasienModel;
+import id.ac.unpas.sistemmanajemenklinik.models.DokterModel;
+import id.ac.unpas.sistemmanajemenklinik.models.PasienModel;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
