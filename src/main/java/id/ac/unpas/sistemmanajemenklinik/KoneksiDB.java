@@ -7,20 +7,24 @@ import javax.swing.JOptionPane;
 
 public class KoneksiDB {
 
-    private static Connection conn;
+       private static Connection mysqlconfig;
 
-    public static Connection configDB() {
+    public static Connection configDB() throws SQLException {
         try {
-            String url = "jdbc:mysql://localhost:3306/klinik_db?useSSL=false&serverTimezone=UTC";
+            // URL Database (Ganti 'root' dan '' sesuai user/pass database lokal Anda)
+            String url = "jdbc:mysql://localhost:3306/klinik_db";
             String user = "root";
             String pass = "";
 
-            conn = DriverManager.getConnection(url, user, pass);
+            // Registrasi Driver
+            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+
+            // Buat Koneksi
+            mysqlconfig = DriverManager.getConnection(url, user, pass);
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,
-                "Koneksi Database Gagal!\n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Koneksi Gagal: " + e.getMessage());
         }
-        return conn;
+        return mysqlconfig;
     }
 }
