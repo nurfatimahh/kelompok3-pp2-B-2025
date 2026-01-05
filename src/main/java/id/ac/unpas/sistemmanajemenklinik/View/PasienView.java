@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package id.ac.unpas.tubespraktikumpemograman2.Controller;
+package id.ac.unpas.sistemmanajemenklinik.View;
 
 /**
  *
  * @author ASUS X441M
  */
-public class DokterController {
+public class PasienView {
     
 }
