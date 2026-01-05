@@ -6,6 +6,13 @@ package id.ac.unpas.sistemmanajemenklinik.controllers;
 
 import id.ac.unpas.sistemmanajemenklinik.models.PasienModel;
 import id.ac.unpas.sistemmanajemenklinik.models.DokterModel;
+
+/**
+ *
+ * @author ASUS X441M
+ */
+public class PemeriksaanController {
+    
 import id.ac.unpas.sistemmanajemenklinik.KoneksiDB;
 import id.ac.unpas.sistemmanajemenklinik.views.PemeriksaanView;
 import java.sql.*;
