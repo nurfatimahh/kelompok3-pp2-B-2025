@@ -3,6 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package id.ac.unpas.sistemmanajemenklinik.Controllers;
+<<<<<<< HEAD
+
+/**
+ *
+ * @author ASUS X441M
+ */
+public class PemeriksaanController {
+    
+=======
 /**
  *
  * @author Narita Risnawati
@@ -173,4 +182,5 @@ public class PemeriksaanController {
     private void exportPdf() {
         try { view.tablePemeriksaan.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat("Laporan Pemeriksaan"), null); } catch (PrinterException ex) {}
     }
+>>>>>>> 157e66bf29838b00f6174d9834661e5698ee54a2
 }
