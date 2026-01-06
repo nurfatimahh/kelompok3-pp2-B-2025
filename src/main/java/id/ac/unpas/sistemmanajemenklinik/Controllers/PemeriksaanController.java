@@ -45,23 +45,19 @@ public class PemeriksaanController {
         loadTableData();
     }
 
-    // Load data Pasien & Dokter dari DB ke ComboBox
     public void loadComboData() {
         view.cmbPasien.removeAllItems();
         view.cmbDokter.removeAllItems();
         try {
             Connection conn = KoneksiDB.configDB();
             
-            // Isi Combo Pasien
             ResultSet resP = conn.createStatement().executeQuery("SELECT * FROM pasien");
             while(resP.next()) {
-                // Trik: Simpan Object PasienModel ke ComboBox
                 view.cmbPasien.addItem(new PasienModel(
                     resP.getString("id"), resP.getString("nik"), resP.getString("nama"), "", ""
                 ));
             }
 
-            // Isi Combo Dokter
             ResultSet resD = conn.createStatement().executeQuery("SELECT * FROM dokter");
             while(resD.next()) {
                 view.cmbDokter.addItem(new DokterModel(
@@ -75,7 +71,6 @@ public class PemeriksaanController {
         view.tableModel.setRowCount(0);
         try {
             Connection conn = KoneksiDB.configDB();
-            // JOIN 3 Tabel untuk menampilkan Nama Pasien & Dokter, bukan ID-nya
             String sql = "SELECT p.id, ps.nama as nama_pasien, d.nama as nama_dokter, p.diagnosa, p.tanggal " +
                          "FROM pemeriksaan p " +
                          "JOIN pasien ps ON p.pasien_id = ps.id " +
@@ -96,19 +91,28 @@ public class PemeriksaanController {
     private void simpan() {
         PasienModel p = (PasienModel) view.cmbPasien.getSelectedItem();
         DokterModel d = (DokterModel) view.cmbDokter.getSelectedItem();
+        String diagnosa = view.txtDiagnosa.getText();
         
+        // --- VALIDASI REVISI ---
         if (p == null || d == null) {
-            JOptionPane.showMessageDialog(view, "Pilih Pasien & Dokter!"); return;
+            JOptionPane.showMessageDialog(view, "Pasien dan Dokter harus dipilih!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
         }
+        
+        if (diagnosa.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(view, "Diagnosa/Resep wajib diisi!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        // -----------------------
 
         try {
             Connection conn = KoneksiDB.configDB();
             String sql = "INSERT INTO pemeriksaan (id, pasien_id, dokter_id, diagnosa, tanggal) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, UUID.randomUUID().toString());
-            pst.setString(2, p.getId()); // Ambil ID asli dari Database
-            pst.setString(3, d.getId()); // Ambil ID asli dari Database
-            pst.setString(4, view.txtDiagnosa.getText());
+            pst.setString(2, p.getId());
+            pst.setString(3, d.getId());
+            pst.setString(4, diagnosa);
             pst.setString(5, new Date().toString());
             pst.execute();
             
@@ -119,7 +123,18 @@ public class PemeriksaanController {
     
     private void update() {
         int row = view.tablePemeriksaan.getSelectedRow();
-        if(row == -1) return;
+        if(row == -1) {
+            JOptionPane.showMessageDialog(view, "Pilih data di tabel terlebih dahulu!");
+            return;
+        }
+        
+        // --- VALIDASI REVISI ---
+        if (view.txtDiagnosa.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(view, "Diagnosa/Resep tidak boleh kosong saat update!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        // -----------------------
+
         String id = view.tableModel.getValueAt(row, 0).toString();
         
         try {
@@ -135,12 +150,24 @@ public class PemeriksaanController {
 
     private void delete() {
         int row = view.tablePemeriksaan.getSelectedRow();
-        if(row == -1) return;
-        String id = view.tableModel.getValueAt(row, 0).toString();
-        try {
-            KoneksiDB.configDB().createStatement().execute("DELETE FROM pemeriksaan WHERE id='" + id + "'");
-            loadTableData(); resetForm();
-        } catch (Exception e) { e.printStackTrace(); }
+        if(row == -1) {
+            JOptionPane.showMessageDialog(view, "Silakan pilih data yang akan dihapus!");
+            return;
+        }
+        
+        // --- KONFIRMASI HAPUS REVISI ---
+        int confirm = JOptionPane.showConfirmDialog(view, "Yakin ingin menghapus data pemeriksaan ini?", "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
+        
+        if (confirm == JOptionPane.YES_OPTION) {
+            String id = view.tableModel.getValueAt(row, 0).toString();
+            try {
+                KoneksiDB.configDB().createStatement().execute("DELETE FROM pemeriksaan WHERE id='" + id + "'");
+                JOptionPane.showMessageDialog(view, "Data Berhasil Dihapus.");
+                loadTableData(); 
+                resetForm();
+            } catch (Exception e) { e.printStackTrace(); }
+        }
+        // Jika NO_OPTION, tidak melakukan apa-apa (kembali)
     }
 
     private void search() {
@@ -167,7 +194,10 @@ public class PemeriksaanController {
     }
 
     private void resetForm() {
-        view.txtDiagnosa.setText(""); view.cmbPasien.setSelectedIndex(0); view.cmbDokter.setSelectedIndex(0);
+        view.txtDiagnosa.setText(""); 
+        if (view.cmbPasien.getItemCount() > 0) view.cmbPasien.setSelectedIndex(0); 
+        if (view.cmbDokter.getItemCount() > 0) view.cmbDokter.setSelectedIndex(0);
+        view.tablePemeriksaan.clearSelection();
         loadTableData();
     }
     

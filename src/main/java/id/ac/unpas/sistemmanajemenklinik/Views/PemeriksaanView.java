@@ -61,11 +61,11 @@ public class PemeriksaanView extends JPanel {
         formPanel.add(cmbDokter, gbc);
 
         gbc.gridx = 0; gbc.gridy = 1; formPanel.add(new JLabel("Diagnosa / Resep:"), gbc);
-        gbc.gridx = 1; gbc.gridy = 1; gbc.gridwidth = 3; gbc.ipady = 40; // Tinggi TextArea
+        gbc.gridx = 1; gbc.gridy = 1; gbc.gridwidth = 3; gbc.ipady = 40;
         txtDiagnosa = new JTextArea(); 
         txtDiagnosa.setBorder(BorderFactory.createLineBorder(new Color(200,200,200)));
         formPanel.add(new JScrollPane(txtDiagnosa), gbc);
-        gbc.ipady = 0; // Reset
+        gbc.ipady = 0; 
 
         // Buttons
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
